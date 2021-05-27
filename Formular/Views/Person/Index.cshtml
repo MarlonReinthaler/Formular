@@ -1,0 +1,56 @@
+﻿@using Formular.Models
+@model IEnumerable<Person>
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="d-flex justify-content-between">
+    <div class="p-3">
+        @using (Html.BeginForm("Index", "Person", FormMethod.Get))
+        {
+            <input type="search" name="search" class="form-control" placeholder="Search" />
+        }
+    </div>
+    <div class="p-3">
+        <a asp-controller="Person" asp-action="Add" class="btn btn-outline-primary btn-sm">Add</a>
+    </div>
+</div>
+
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Ort</th>
+                <th>PLZ</th>
+                <th>Alter</th>
+                <th>Email</th>
+                <th>Config</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Person per in Model)
+            {
+                <tr>
+                    <td>@per.Name</td>
+                    <td>@per.Ort</td>
+                    <td>@per.PLZ</td>
+                    <td>@per.PAlter</td>
+                    <td>@per.Email</td>
+                    <td>
+                        <div>
+                            <a asp-controller="Person" asp-action="Update" asp-route-Id="@per.Id" class="btn btn-outline-info btn-sm">Update</a>
+                            <a asp-controller="Person" asp-action="Delete" asp-route-Id="@per.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No entries found</p>
+}
